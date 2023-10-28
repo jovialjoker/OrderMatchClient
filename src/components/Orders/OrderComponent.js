@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-const OrderComponent = ({ heading, description, icon, href }) => {
+const OrderComponent = ({ status, donor, receiver, distance }) => {
   return (
     <Box
       w={"60rem"}
@@ -23,16 +23,19 @@ const OrderComponent = ({ heading, description, icon, href }) => {
       p={5}
     >
       <Stack align={"start"} spacing={2}>
-        
         <Box mt={2}>
-          <Heading size="md">Receiver: {heading}</Heading>
+          <Heading size="md">Receiver: {receiver}</Heading>
           <Text mt={1} fontSize={"sm"}>
-            Donor: {description}
+            Donor: {donor}
+          </Text>
+          <Text mt={1} fontSize={"sm"}>
+            Distance: {distance}
+          </Text>
+          <Text mt={1} fontSize={"sm"}>
+            Status: {status}
           </Text>
         </Box>
-        <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
-          <Link to={`/Orders/${href}`}>Learn more</Link>
-        </Button>
+        
       </Stack>
     </Box>
   );

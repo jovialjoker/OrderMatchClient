@@ -18,16 +18,17 @@ import {
 } from "@chakra-ui/react";
 import VenueMap from "../../components/Venues/VenueMap";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function InsertVenues() {
-  const [formState, setFormState] = React.useState({uuid: "00000000-0000-0000-0000-000000000000", isDonating: false});
+  const navigate = useNavigate();
+  const [formState, setFormState] = React.useState({ isDonating: false});
   const [coords, setCoords] = React.useState({});
   React.useEffect(() => {
     setFormState({ ...formState, long : coords.lng, lat: coords.lat });
   }, [coords]);
   const clickHandler = async (e) => {
     e.preventDefault();
-    console.log(formState)
     await fetch("http://192.168.1.142:8080/venues",{
       method: "POST",
       headers: {
@@ -35,6 +36,7 @@ function InsertVenues() {
       },
       body: JSON.stringify(formState)
     })
+    navigate("/Venues")
   };
   return (
     <Flex
@@ -82,7 +84,7 @@ function InsertVenues() {
                 <option value="RESTAURANT">Restaurant</option>
                 <option value="MARKET_PLACE">Marketplace</option>
                 <option value="FOOD_BANK">Food bank</option>
-                <option value="SHELTERS">Shelter</option>
+                <option value="SHELTER">Shelter</option>
               </Select>
             </FormControl>
             <FormControl id="donating">

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import CourierComponent from "../../components/Couriers/CourierComponent";
 
 const CouriersList = () => {
-  const [venues, setVenues] = React.useState([1, 2]);
+  const [venues, setVenues] = React.useState([]);
   React.useEffect(() => {
     const getVenues = async () => {
       const res = await fetch("http://192.168.1.142:8080/couriers/all-id-name");
@@ -33,9 +33,7 @@ const CouriersList = () => {
               Couriers List
             </Heading>
             <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reiciendis obcaecati ut cupiditate pariatur, dignissimos, placeat
-              amet officiis.
+              These are all the available couriers
             </Text>
           </Stack>
           <Button

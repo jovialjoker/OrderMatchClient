@@ -24,8 +24,27 @@ const InteractiveMap = () => {
     lat: 10.99835602,
     lng: 77.01502627,
   });
+  const [couriers, setCouries] = useState([]);
+  const [orders, setOrders] = useState([]);
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition(showPosition);
+  }, []);
+
+  const transformCouriers = (courier) => {
+    return {
+      courierId: courier.uuid,
+      name: courier.name,
+      coords: [courier.lastLat, courier.lastLong],
+    };
+  };
+  React.useEffect(() => {
+    const fct = async () => {
+      const res = await fetch("http://192.168.1.142:8080/couriers/all");
+      const data = await res.json();
+      setCouries(data.map((e) => transformCouriers(e)));
+      console.log(data.map((e) => transformCouriers(e)));
+    };
+    fct();
   }, []);
 
   function showPosition(position) {
@@ -37,7 +56,27 @@ const InteractiveMap = () => {
     setIsLoaded(true);
   }
 
-  
+  const transormVanue = (obj, index) => {
+    return {
+      icon:
+        obj.actionType == "PICKUP"
+          ? icons.venue
+          : icons.receiver,
+      coords: [obj.venue.lat + index * 0.01, obj.venue.long + index * 0.01],
+    };
+  };
+
+  const clickHandler = async (courierId) => {
+    const res = await fetch(
+      `http://192.168.1.142:8080/couriers/actions/${courierId}`
+    );
+    const data = await res.json();
+    if(data){
+      setOrders(data.map((e, index) => transormVanue(e, index)));
+    }
+    
+  };
+
   return (
     isLoaded && (
       <MapContainer
@@ -50,23 +89,19 @@ const InteractiveMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* <Marker position={[center.lat + 0.005, center.lng+ 0.005]} icon={driver}>
-          <Popup>Popup for Marker</Popup>
-          <Tooltip>Tooltip for Marker</Tooltip>
-        </Marker>
-        <Polyline pathOptions={{ color: "black" }} positions={[[center.lat, center.lng], [center.lat + 0.01, center.lng+ 0.01]]} />
-        <Marker position={[center.lat + 0.01, center.lng+ 0.01]} icon={venue}>
-          <Popup>Popup for Marker</Popup>
-          <Tooltip>Tooltip for Marker</Tooltip>
-        </Marker> */}
-        {/* <Marker position={[center.lat, center.lng]} icon={receiver}>
-          <Popup>Popup for Marker</Popup>
-          <Tooltip>Tooltip for Marker</Tooltip>
-        </Marker> */}
-        <CustomMarkers coords={[center.lat, center.lng]} icon={icons.receiver} name={"receiver"}/>
-        <CustomMarkers coords={[center.lat + 0.005, center.lng+ 0.005]} icon={icons.driver} name={"driver"}/>
-        <CustomMarkers coords={[center.lat + 0.01, center.lng + 0.01]} icon={icons.venue} name={"receiver"}/>
-        <Polyline pathOptions={{ color: "black" }} positions={[[center.lat, center.lng], [center.lat + 0.01, center.lng+ 0.01]]} />
+        {couriers.map((c) => (
+          <CustomMarkers
+            coords={c.coords}
+            icon={icons.driver}
+            name={c.name}
+            clickHandler={() => clickHandler(c.courierId)}
+          />
+        ))}
+        <Polyline pathOptions={{ color: "black" }} positions={orders.map(o => o.coords)} />{" "}
+        {orders.map((o) => (
+          <CustomMarkers coords={o.coords} icon={o.icon} name={""} />
+        ))}
+
       </MapContainer>
     )
   );

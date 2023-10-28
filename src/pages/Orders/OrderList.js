@@ -16,15 +16,27 @@ import CourierComponent from "../../components/Couriers/CourierComponent";
 import OrderComponent from "../../components/Orders/OrderComponent";
 
 const OrderList = () => {
-  const [orders, setOrder] = React.useState([1, 2]);
+  const [orders, setOrder] = React.useState([]);
   React.useEffect(() => {
     const getVenues = async () => {
-      const res = await fetch("http://192.168.1.142:8080/orders/");
+
+      const res = await fetch("http://192.168.1.142:8080/orders");
+
       const data = await res.json();
-      setOrder(data);
+      console.log(data);
+      setOrder(data.map((o) => transformOrder(o)));
     };
     getVenues();
   }, []);
+
+  const transformOrder = (order) => {
+    return {
+      status: order.status,
+      donor: order.pickupVenueId.name,
+      receiver: order.deliveryVenueId.name,
+      distance: order.deliveryDistance + order.pickupDistance,
+    };
+  };
 
   return (
     <>
@@ -35,9 +47,7 @@ const OrderList = () => {
               Order List
             </Heading>
             <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reiciendis obcaecati ut cupiditate pariatur, dignissimos, placeat
-              amet officiis.
+              These are all the orders
             </Text>
           </Stack>
         </Flex>
@@ -45,10 +55,12 @@ const OrderList = () => {
         <Container maxW={"5xl"} mt={12}>
           <Flex flexWrap="wrap" gridGap={12} justify="center">
             {orders.map((order) => (
-              <OrderComponent key={order.uuid} heading={order.receivingName}
-              description={order.venueName}
-              //icon={<Icon as={FcAssistant} w={10} h={10} />}
-              href={order.uuid}/>
+              <OrderComponent
+                status={order.status}
+                donor={order.donor}
+                receiver={order.receiver}
+                distance={order.distance}
+              />
             ))}
           </Flex>
         </Container>
