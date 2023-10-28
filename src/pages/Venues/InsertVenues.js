@@ -18,8 +18,10 @@ import {
 } from "@chakra-ui/react";
 import VenueMap from "../../components/Venues/VenueMap";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function InsertVenues() {
+  const navigate = useNavigate();
   const [formState, setFormState] = React.useState({ isDonating: false});
   const [coords, setCoords] = React.useState({});
   React.useEffect(() => {
@@ -34,6 +36,7 @@ function InsertVenues() {
       },
       body: JSON.stringify(formState)
     })
+    navigate("/Venues")
   };
   return (
     <Flex

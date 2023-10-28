@@ -17,8 +17,10 @@ import {
   Select,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const InsertCouriers = () => {
+  const navigate = useNavigate();
   const [courier, setCourier] = useState({
     name: "",
     phoneNumber: "",
@@ -61,6 +63,7 @@ const InsertCouriers = () => {
         lastLat: center.lat, lastLong: center.lng
       }),
     });
+    navigate("/Couriers")
   };
   return (
     <Flex

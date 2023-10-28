@@ -17,9 +17,10 @@ import {
   Select,
 } from "@chakra-ui/react";
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const ViewVenues = () => {
   const [venues, setVenues] = React.useState([])
+  const navigate = useNavigate();
   const [order, setOrder] = React.useState({
     assignedCourierId: null,
     pickupVenueId: null,
@@ -58,6 +59,7 @@ const ViewVenues = () => {
       },
       body: JSON.stringify(order)
     })
+    navigate("/Venues")
   };
   return (
     <Flex
