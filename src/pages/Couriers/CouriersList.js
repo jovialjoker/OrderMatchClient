@@ -34,9 +34,7 @@ const CouriersList = () => {
               Couriers List
             </Heading>
             <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reiciendis obcaecati ut cupiditate pariatur, dignissimos, placeat
-              amet officiis.
+              These are all the available couriers
             </Text>
           </Stack>
           <Button

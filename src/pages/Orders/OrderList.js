@@ -16,7 +16,7 @@ import CourierComponent from "../../components/Couriers/VenueComponent";
 import OrderComponent from "../../components/Orders/OrderComponent";
 
 const OrderList = () => {
-  const [orders, setOrder] = React.useState([1, 2]);
+  const [orders, setOrder] = React.useState([]);
   React.useEffect(() => {
     const getVenues = async () => {
       const res = await fetch("http://192.168.1.142:8080/orders");
@@ -45,9 +45,7 @@ const OrderList = () => {
               Order List
             </Heading>
             <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reiciendis obcaecati ut cupiditate pariatur, dignissimos, placeat
-              amet officiis.
+              These are all the orders
             </Text>
           </Stack>
         </Flex>
