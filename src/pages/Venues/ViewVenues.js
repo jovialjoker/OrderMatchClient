@@ -21,7 +21,6 @@ import React from "react";
 const ViewVenues = () => {
   const [venues, setVenues] = React.useState([])
   const [order, setOrder] = React.useState({
-    uuid: "00000000-0000-0000-0000-000000000000",
     assignedCourierId: "00000000-0000-0000-0000-000000000000",
     pickupVenueId: "00000000-0000-0000-0000-000000000000",
     deliveryVenueId: "00000000-0000-0000-0000-000000000000",
@@ -42,7 +41,7 @@ const ViewVenues = () => {
   
   React.useEffect(() => {
     const getVenues = async () =>{
-      const res = await fetch("")
+      const res = await fetch("http://192.168.1.142:8080/venues/without-donating")
       const data = await res.json();
       setVenues(data)
     }

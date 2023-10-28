@@ -12,15 +12,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import CourierComponent from "../../components/Couriers/VenueComponent";
+import OrderComponent from "../../components/Orders/OrderComponent";
 
-const VenuesList = () => {
-  const [venues, setVenues] = React.useState([]);
+const OrderList = () => {
+  const [orders, setOrder] = React.useState([1, 2]);
   React.useEffect(() => {
     const getVenues = async () => {
-      const res = await fetch("http://192.168.1.142:8080/venues");
+      const res = await fetch("http://192.168.1.142:8080/couriers/all-id-name");
       const data = await res.json();
-      console.log(data);
-      setVenues(data);
+      setOrder(data);
     };
     getVenues();
   }, []);
@@ -31,7 +32,7 @@ const VenuesList = () => {
         <Flex flexDir={"row"} w={"100rem"}>
           <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
             <Heading fontSize={{ base: "2xl", sm: "4xl" }} fontWeight={"bold"}>
-              Venues List
+              Order List
             </Heading>
             <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -39,30 +40,15 @@ const VenuesList = () => {
               amet officiis.
             </Text>
           </Stack>
-          <Button
-            px={8}
-            bg={useColorModeValue("#151f21", "gray.900")}
-            color={"white"}
-            rounded={"md"}
-            _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "lg",
-            }}
-          >
-            <Link to={"/Venues/Insert-Venues"}>Click Me</Link>
-          </Button>
         </Flex>
 
         <Container maxW={"5xl"} mt={12}>
           <Flex flexWrap="wrap" gridGap={12} justify="center">
-            {venues.map((venue) => (
-              <VenueComponent
-                name={venue.venueName}
-                //icon={<Icon as={FcAssistant} w={10} h={10} />}
-                id={venue.venueId}
-                isDonating={venue.isDonating}
-                type={venue.venueType}
-              />
+            {orders.map((order) => (
+              <OrderComponent key={order.uuid} heading={order.receivingName}
+              description={order.venueName}
+              //icon={<Icon as={FcAssistant} w={10} h={10} />}
+              href={order.uuid}/>
             ))}
           </Flex>
         </Container>
@@ -71,4 +57,4 @@ const VenuesList = () => {
   );
 };
 
-export default VenuesList;
+export default OrderList;

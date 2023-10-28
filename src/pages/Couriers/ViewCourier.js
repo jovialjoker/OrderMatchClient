@@ -13,7 +13,7 @@ const ViewCourier = () => {
     setIsActivated(!isActivated);
     const id = window.location.href.split("/").pop();
     setCourierId(id);
-    fetch("", {
+    fetch("http://192.168.1.142:8080/couriers/status", {
       method:"PATCH",
       headers:{
         "Content-Type": "application/json"
@@ -30,16 +30,13 @@ const ViewCourier = () => {
       lat: position.coords.latitude,
       long: position.coords.longitude,
     });
-    return {
-      lat: position.coords.latitude,
-      long: position.coords.longitude,
-    }
   }
 
   React.useEffect(() => {
     let interval = setInterval(() => {
       if (isActivated) {
-        let {lat, long}= navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition);
+
         fetch("http://192.168.1.142:8080/couriers/coords", {
           method:"PATCH",
           headers:{
@@ -47,8 +44,8 @@ const ViewCourier = () => {
           },
           body: JSON.stringify({
             uuid: courierId,
-            lat,
-            long
+            lat: center.lat,
+            long: center.long
           })
         })
         

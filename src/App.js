@@ -10,7 +10,8 @@ import ViewVenues from "./pages/Venues/ViewVenues";
 import CouriersList from "./pages/Couriers/CouriersList";
 import InsertCouriers from "./pages/Couriers/InsertCouriers";
 import ViewCourier from "./pages/Couriers/ViewCourier";
-// 'Doners', 'Receivers', 'Orders', 'Couriers'
+import OrderList from "./pages/Orders/OrderList";
+import ViewOrder from "./components/Orders/ViewOrder";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,7 +40,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/Orders',
-        element: <InteractiveMap/>
+        children:[
+          {
+            path: '/Orders',
+            element: <OrderList/>,
+          },
+          {
+            path: '/Orders/:id',
+            element: <ViewOrder/>,
+          },
+        ]
       },
       {
         path: '/Couriers',

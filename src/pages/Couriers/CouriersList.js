@@ -18,7 +18,7 @@ const CouriersList = () => {
   const [venues, setVenues] = React.useState([1, 2]);
   React.useEffect(() => {
     const getVenues = async () => {
-      const res = await fetch("");
+      const res = await fetch("http://192.168.1.142:8080/couriers/all-id-name");
       const data = await res.json();
       setVenues(data);
     };
@@ -55,11 +55,10 @@ const CouriersList = () => {
 
         <Container maxW={"5xl"} mt={12}>
           <Flex flexWrap="wrap" gridGap={12} justify="center">
-            {venues.map((venue) => (
-              <CourierComponent heading={"Heading"}
+            {venues.map((courier) => (
+              <CourierComponent key={courier.uuid} heading={courier.name}
               //icon={<Icon as={FcAssistant} w={10} h={10} />}
-              description={"Lorem ipsum dolor sit amet catetur, adipisicing elit."}
-              href={"1"}/>
+              href={courier.uuid}/>
             ))}
           </Flex>
         </Container>
