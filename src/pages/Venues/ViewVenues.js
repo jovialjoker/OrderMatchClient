@@ -21,17 +21,17 @@ import React from "react";
 const ViewVenues = () => {
   const [venues, setVenues] = React.useState([])
   const [order, setOrder] = React.useState({
-    assignedCourierId: "00000000-0000-0000-0000-000000000000",
-    pickupVenueId: "00000000-0000-0000-0000-000000000000",
-    deliveryVenueId: "00000000-0000-0000-0000-000000000000",
+    assignedCourierId: null,
+    pickupVenueId: null,
+    deliveryVenueId: null,
     rating: 0,
-    pickupTime: new Date().getUTCDate(),
-    deliveryTime: new Date().getUTCDate(),
+    pickupTime: new Date(),
+    deliveryTime: new Date(),
     pickupDistance: 0,
     deliveryDistance: 0,
     status: "IN_PROGRESS",
     capacity: null,
-    createdAt: new Date().getUTCDate(),
+    createdAt: new Date(),
   });
 
   React.useEffect(()=>{
@@ -98,10 +98,10 @@ const ViewVenues = () => {
             <FormControl id="name" isRequired>
               <FormLabel>Capacity</FormLabel>
               <Input
-                type="text"
+                type="number"
                 value={order.capacity}
                 onChange={(e) =>
-                  setOrder({ ...order, capacity: e.target.value })
+                  setOrder({ ...order, capacity: parseInt(e.target.value) })
                 }
               />
             </FormControl>

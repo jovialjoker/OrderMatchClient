@@ -71,7 +71,10 @@ const InteractiveMap = () => {
       `http://192.168.1.142:8080/couriers/actions/${courierId}`
     );
     const data = await res.json();
-    setOrders(data.map((e, index) => transormVanue(e, index)));
+    if(data){
+      setOrders(data.map((e, index) => transormVanue(e, index)));
+    }
+    
   };
 
   return (

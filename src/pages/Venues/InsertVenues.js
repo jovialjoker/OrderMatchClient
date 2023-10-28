@@ -20,7 +20,7 @@ import VenueMap from "../../components/Venues/VenueMap";
 import React from "react";
 
 function InsertVenues() {
-  const [formState, setFormState] = React.useState({uuid: "00000000-0000-0000-0000-000000000000", isDonating: false});
+  const [formState, setFormState] = React.useState({ isDonating: false});
   const [coords, setCoords] = React.useState({});
   React.useEffect(() => {
     setFormState({ ...formState, long : coords.lng, lat: coords.lat });
@@ -28,6 +28,7 @@ function InsertVenues() {
   const clickHandler = async (e) => {
     e.preventDefault();
     console.log(formState)
+    debugger;
     await fetch("http://192.168.1.142:8080/venues",{
       method: "POST",
       headers: {
@@ -82,7 +83,7 @@ function InsertVenues() {
                 <option value="RESTAURANT">Restaurant</option>
                 <option value="MARKET_PLACE">Marketplace</option>
                 <option value="FOOD_BANK">Food bank</option>
-                <option value="SHELTERS">Shelter</option>
+                <option value="SHELTER">Shelter</option>
               </Select>
             </FormControl>
             <FormControl id="donating">
