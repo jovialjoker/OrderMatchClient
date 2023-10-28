@@ -1,0 +1,130 @@
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  HStack,
+  InputRightElement,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  Link,
+  Checkbox,
+  Select,
+} from "@chakra-ui/react";
+import React from "react";
+
+const ViewVenues = () => {
+  const [venues, setVenues] = React.useState([])
+  const [order, setOrder] = React.useState({
+    uuid: "00000000-0000-0000-0000-000000000000",
+    assignedCourierId: "00000000-0000-0000-0000-000000000000",
+    pickupVenueId: "00000000-0000-0000-0000-000000000000",
+    deliveryVenueId: "00000000-0000-0000-0000-000000000000",
+    rating: 0,
+    pickupTime: new Date().getUTCDate(),
+    deliveryTime: new Date().getUTCDate(),
+    pickupDistance: 0,
+    deliveryDistance: 0,
+    status: "IN_PROGRESS",
+    capacity: null,
+    createdAt: new Date().getUTCDate(),
+  });
+
+  React.useEffect(()=>{
+    const id = window.location.href.split('/').pop()
+    setOrder({...order, pickupVenueId: id})
+  },[])
+  
+  React.useEffect(() => {
+    const getVenues = async () =>{
+      const res = await fetch("")
+      const data = await res.json();
+      setVenues(data)
+    }
+    getVenues()
+  },[])
+  
+  const clickHandler = async (e) => {
+    e.preventDefault();
+    console.log(order)
+    await fetch("http://192.168.1.142:8080/orders",{
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json', // Specify that you're sending JSON data
+      },
+      body: JSON.stringify(order)
+    })
+  };
+  return (
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"}>
+            Place an order
+          </Heading>
+          <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
+            Contribute to making a better world by adding your business to our
+            app
+          </Text>
+        </Stack>
+        <Box
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+        >
+          <Stack spacing={4}>
+            <FormControl id="venue_type" isRequired>
+              <FormLabel>Venue type</FormLabel>
+              <Select
+                placeholder="Select option"
+                value={order.deliveryVenueId }
+                onChange={(e) =>
+                  setOrder({ ...order, deliveryVenueId : e.target.value })
+                }
+              >
+                {venues.map(venue => <option key={venue.id} value={venue.id}>{venue.name}</option>)}
+              </Select>
+            </FormControl>
+            <FormControl id="name" isRequired>
+              <FormLabel>Capacity</FormLabel>
+              <Input
+                type="text"
+                value={order.capacity}
+                onChange={(e) =>
+                  setOrder({ ...order, capacity: e.target.value })
+                }
+              />
+            </FormControl>
+            <Stack spacing={10} pt={2}>
+              <Button
+                loadingText="Submitting"
+                size="lg"
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                onClick={clickHandler}
+              >
+                Add
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
+  );
+}
+
+export default ViewVenues
