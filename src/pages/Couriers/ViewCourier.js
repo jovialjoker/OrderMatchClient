@@ -20,7 +20,7 @@ const ViewCourier = () => {
       },
       body: JSON.stringify({
         uuid: id,
-        status: isActivated ? "FREE": "DEACTIVATED"
+        status: !isActivated ? "FREE": "DEACTIVATED"
       })
     })
   };
