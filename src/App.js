@@ -11,7 +11,7 @@ import CouriersList from "./pages/Couriers/CouriersList";
 import InsertCouriers from "./pages/Couriers/InsertCouriers";
 import ViewCourier from "./pages/Couriers/ViewCourier";
 import OrderList from "./pages/Orders/OrderList";
-import ViewOrder from "./components/Orders/ViewOrder";
+import CourierAction from "./pages/Couriers/CourierAction";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,10 +45,6 @@ const router = createBrowserRouter([
             path: '/Orders',
             element: <OrderList/>,
           },
-          {
-            path: '/Orders/:id',
-            element: <ViewOrder/>,
-          },
         ]
       },
       {
@@ -65,6 +61,10 @@ const router = createBrowserRouter([
           {
             path: "/Couriers/:id",
             element: <ViewCourier/>
+          },
+          {
+            path: "/Couriers/CouriersAction/:id",
+            element: <CourierAction />
           }
         ]
       },

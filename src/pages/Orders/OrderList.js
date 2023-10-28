@@ -12,14 +12,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import CourierComponent from "../../components/Couriers/VenueComponent";
+import CourierComponent from "../../components/Couriers/CourierComponent";
 import OrderComponent from "../../components/Orders/OrderComponent";
 
 const OrderList = () => {
   const [orders, setOrder] = React.useState([1, 2]);
   React.useEffect(() => {
     const getVenues = async () => {
-      const res = await fetch("http://192.168.1.142:8080/couriers/all-id-name");
+      const res = await fetch("http://192.168.1.142:8080/orders/");
       const data = await res.json();
       setOrder(data);
     };
