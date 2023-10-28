@@ -1,5 +1,4 @@
 import React from "react";
-import VenueComponent from "../../components/Venues/VenueComponent";
 import {
   Box,
   Button,
@@ -12,7 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import CourierComponent from "../../components/Couriers/VenueComponent";
+import CourierComponent from "../../components/Couriers/CourierComponent";
 
 const CouriersList = () => {
   const [venues, setVenues] = React.useState([]);
@@ -54,7 +53,7 @@ const CouriersList = () => {
         <Container maxW={"5xl"} mt={12}>
           <Flex flexWrap="wrap" gridGap={12} justify="center">
             {venues.map((courier) => (
-              <CourierComponent key={courier.uuid} heading={courier.name}
+              <CourierComponent key={courier.uuid} id={courier.uuid} heading={courier.name}
               //icon={<Icon as={FcAssistant} w={10} h={10} />}
               href={courier.uuid}/>
             ))}
