@@ -47,7 +47,6 @@ const VenueMap = ({ formState, changeHandler }) => {
   const eventHandlers = useMemo(
     () => ({
       dragend() {
-        debugger;
         const marker = markerRef.current;
         if (marker != null) {
           const newPos = { ...marker.getLatLng() };
@@ -59,8 +58,6 @@ const VenueMap = ({ formState, changeHandler }) => {
   );
 
   const handleAddMarker = (map, location) => {
-    // Set the marker coordinates when a location is selected
-    debugger;
     setCenter({ lng: location.x, lat: location.y });
   };
 

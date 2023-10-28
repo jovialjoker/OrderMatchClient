@@ -27,8 +27,6 @@ function InsertVenues() {
   }, [coords]);
   const clickHandler = async (e) => {
     e.preventDefault();
-    console.log(formState)
-    debugger;
     await fetch("http://192.168.1.142:8080/venues",{
       method: "POST",
       headers: {
